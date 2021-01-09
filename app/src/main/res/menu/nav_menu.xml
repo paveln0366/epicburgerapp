@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_burgers"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="@string/nav_burgers"
+            android:checked="true"/>
+
+        <item android:id="@+id/nav_desserts"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="@string/nav_desserts"/>
+
+        <item android:id="@+id/nav_drinks"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="@string/nav_drinks"/>
+
+        <item android:id="@+id/nav_rolls"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="@string/nav_rolls"/>
+    </group>
+
+    <item android:title="@string/nav_support">
+        <menu>
+            <item android:id="@+id/nav_help"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="@string/nav_help"/>
+
+            <item android:id="@+id/nav_feedback"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="@string/nav_feedback"/>
+        </menu>
+    </item>
+</menu>
