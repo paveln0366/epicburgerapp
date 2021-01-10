@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FeedbackActivity">
+    tools:context=".OrderActivity">
 
     <include
         layout="@layout/toolbar_main"
@@ -14,6 +14,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/feedback"
+        android:text="@string/nav_order"
         android:layout_margin="@dimen/standard_margin"/>
 </LinearLayout>

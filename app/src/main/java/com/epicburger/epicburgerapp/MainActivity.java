@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         // Add burgers fragment to main activity
-        Fragment fragment = new BurgersFragment();
+        Fragment fragment = new NewFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content_frame, fragment);
         ft.commit();
@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_rolls:
                 fragment = new RollsFragment();
                 break;
+            case R.id.nav_order:
+                intent = new Intent(this, OrderActivity.class);
+                break;
             case R.id.nav_help:
                 intent = new Intent(this, HelpActivity.class);
                 break;
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, FeedbackActivity.class);
                 break;
             default:
-                fragment = new BurgersFragment();
+                fragment = new NewFragment();
         }
 
         // Show fragment or activity

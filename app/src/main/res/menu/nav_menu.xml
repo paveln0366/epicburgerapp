@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/nav_user_name">
+        <menu>
+            <item android:id="@+id/nav_order"
+                android:icon="@drawable/ic_order"
+                android:title="@string/nav_order"/>
+
+            <item android:id="@+id/nav_favorite"
+                android:icon="@drawable/ic_favorite"
+                android:title="@string/nav_favorite"/>
+        </menu>
+    </item>
+
     <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_new"
+            android:icon="@drawable/ic_new"
+            android:title="@string/nav_new"
+            android:checked="true"/>
+
         <item android:id="@+id/nav_burgers"
             android:icon="@drawable/ic_burger"
-            android:title="@string/nav_burgers"
-            android:checked="true"/>
+            android:title="@string/nav_burgers"/>
 
         <item android:id="@+id/nav_desserts"
             android:icon="@drawable/ic_dessert"
@@ -19,6 +36,8 @@
             android:icon="@drawable/ic_roll"
             android:title="@string/nav_rolls"/>
     </group>
+
+
 
     <item android:title="@string/nav_support">
         <menu>
