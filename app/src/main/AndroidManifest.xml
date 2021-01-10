@@ -10,9 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CreateOrderActivity"></activity>
-        <activity android:name=".OrderActivity" />
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".HelpActivity" />
+        <activity
+            android:name=".OrderActivity"
+            android:label="@string/nav_order"/>
+        <activity
+            android:name=".FeedbackActivity"
+            android:label="@string/nav_feedback"/>
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/nav_help"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

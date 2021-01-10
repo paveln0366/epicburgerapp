@@ -22,5 +22,6 @@
 
     <string name="nav_open_drawer">Open navigation drawer</string>
     <string name="nav_close_drawer">Close navigation drawer</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_cost">$0.00</string>
 </resources>
