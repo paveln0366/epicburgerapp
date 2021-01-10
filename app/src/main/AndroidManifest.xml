@@ -12,13 +12,28 @@
         <activity android:name=".CreateOrderActivity"></activity>
         <activity
             android:name=".OrderActivity"
-            android:label="@string/nav_order"/>
+            android:label="@string/nav_order"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <activity
             android:name=".FeedbackActivity"
-            android:label="@string/nav_feedback"/>
+            android:label="@string/nav_feedback"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <activity
             android:name=".HelpActivity"
-            android:label="@string/nav_help"/>
+            android:label="@string/nav_help"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
