@@ -24,4 +24,5 @@
     <string name="nav_close_drawer">Close navigation drawer</string>
 
     <string name="menu_cost">$0.00</string>
+    <string name="action_share">Share</string>
 </resources>
