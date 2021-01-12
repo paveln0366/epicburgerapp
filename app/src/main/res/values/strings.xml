@@ -25,4 +25,7 @@
 
     <string name="menu_cost">$0.00</string>
     <string name="action_share">Share</string>
+
+    <string name="title_epic">Epic</string>
+    <string name="title_whopper">Whopper</string>
 </resources>

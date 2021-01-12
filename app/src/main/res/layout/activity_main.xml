@@ -17,10 +17,12 @@
             layout="@layout/toolbar_main"
             android:id="@+id/toolbar"/>
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
