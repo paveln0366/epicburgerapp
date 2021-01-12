@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Register listener (MainActivity) in NavigationView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_burgers:
-                fragment = new BurgersFragment();
+                intent = new Intent(this, BurgersActivity.class);
                 break;
             case R.id.nav_desserts:
                 fragment = new DessertsFragment();
@@ -123,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setShareActionIntent("Message");
         return super.onCreateOptionsMenu(menu);
     }
-
+    
     private void setShareActionIntent(String text) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
