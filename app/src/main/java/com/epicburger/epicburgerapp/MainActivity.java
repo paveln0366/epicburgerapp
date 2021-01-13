@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_burgers:
+                //fragment = new BurgersFragment();
                 intent = new Intent(this, BurgersActivity.class);
                 break;
             case R.id.nav_desserts:
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setShareActionIntent("Message");
         return super.onCreateOptionsMenu(menu);
     }
-    
+
     private void setShareActionIntent(String text) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
