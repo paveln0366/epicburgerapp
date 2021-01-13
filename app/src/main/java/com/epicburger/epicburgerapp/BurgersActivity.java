@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.epicburger.epicburgerapp.burgers.CheeseBurgersFragment;
+import com.epicburger.epicburgerapp.burgers.ChickenBurgersFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class BurgersActivity extends AppCompatActivity {
@@ -53,9 +55,9 @@ public class BurgersActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new EpicBurgersFragment();
+                    return new CheeseBurgersFragment();
                 case 1:
-                    return new WhopperBurgersFragment();
+                    return new ChickenBurgersFragment();
             }
             return null;
         }
@@ -64,9 +66,9 @@ public class BurgersActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getResources().getText(R.string.title_epic);
+                    return getResources().getText(R.string.title_cheeseburgers);
                 case 1:
-                    return getResources().getText(R.string.title_whopper);
+                    return getResources().getText(R.string.title_chickenburgers);
             }
             return null;
         }

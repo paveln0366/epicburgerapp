@@ -26,20 +26,20 @@
     <string name="menu_cost">$0.00</string>
     <string name="action_share">Share</string>
 
-    <string name="title_epic">Epic</string>
-    <string name="title_whopper">Whopper</string>
+    <string name="title_cheeseburgers">Cheeseburgers</string>
+    <string name="title_chickenburgers">Chickenburgers</string>
 
-    <string-array name="epic_burgers">
-        <item>DOUBLE BIG EPIC</item>
-        <item>BIG EPIC XXL</item>
-        <item>BIG EPIC</item>
-        <item>CHICKEN EPIC XXL</item>
+    <string-array name="cheese_burgers">
+        <item>Cheeseburger 1</item>
+        <item>Cheeseburger 2</item>
+        <item>Cheeseburger 3</item>
+        <item>Cheeseburger 4</item>
     </string-array>
 
-    <string-array name="whopper_burgers">
-        <item>WHOPPER</item>
-        <item>CHEESY WHOPPER</item>
-        <item>BARBECUE WHOPPER</item>
-        <item>DOUBLE WHOPPER</item>
+    <string-array name="chicken_burgers">
+        <item>Chickenburger 1</item>
+        <item>Chickenburger 2</item>
+        <item>Chickenburger 3</item>
+        <item>Chickenburger 4</item>
     </string-array>
 </resources>
