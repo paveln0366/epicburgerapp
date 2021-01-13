@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class BurgersActivity extends AppCompatActivity {
 
     @Override
@@ -26,12 +28,14 @@ public class BurgersActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-
         // Add view pager
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
+
+        // Bind view pager with tab layout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(pager);
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -52,6 +56,17 @@ public class BurgersActivity extends AppCompatActivity {
                     return new EpicBurgersFragment();
                 case 1:
                     return new WhopperBurgersFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getResources().getText(R.string.title_epic);
+                case 1:
+                    return getResources().getText(R.string.title_whopper);
             }
             return null;
         }
