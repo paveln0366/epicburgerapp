@@ -14,8 +14,7 @@
 
         <include
             layout="@layout/toolbar_main"
-            android:id="@+id/toolbar"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            android:id="@+id/toolbar"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
