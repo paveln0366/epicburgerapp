@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, BurgersActivity.class);
                 break;
             case R.id.nav_desserts:
-                fragment = new DessertsFragment();
+                //fragment = new DessertsFragment();
+                intent = new Intent(this, DetailActivity.class);
                 break;
             case R.id.nav_drinks:
                 fragment = new DrinksFragment();
