@@ -12,7 +12,8 @@
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".BurgersActivity"></activity>
         <activity
             android:name=".BurgersActivity"
             android:parentActivityName=".MainActivity">

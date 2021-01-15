@@ -47,7 +47,7 @@
     <string name="new_text">New items and promotions will be displayed here!</string>
 
     <string name="detail_name">Detail name</string>
-    <string name="detail_ingredients">Detail ingredients</string>
+    <string name="detail_cost">Detail cost</string>
     <string name="title_activity_detail">DetailActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

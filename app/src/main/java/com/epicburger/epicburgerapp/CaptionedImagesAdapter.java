@@ -21,7 +21,7 @@ public class CaptionedImagesAdapter
 
     private Listener listener;
 
-    interface Listener {
+    public interface Listener {
         void onClick(int position);
     }
 
