@@ -6,10 +6,10 @@ public class Cheeseburger {
     private int imageResourceId;
 
     public static final Cheeseburger[] cheeseburgers = {
-        new Cheeseburger("Cheeseburger 1", 1, R.drawable.cheeseburger_1),
-        new Cheeseburger("Cheeseburger 2", 2, R.drawable.cheeseburger_2),
-        new Cheeseburger("Cheeseburger 3", 3, R.drawable.cheeseburger_3),
-        new Cheeseburger("Cheeseburger 4", 4, R.drawable.cheeseburger_4),
+        new Cheeseburger("Cheeseburger 1", 1.20, R.drawable.cheeseburger_1),
+        new Cheeseburger("Cheeseburger 2", 1.50, R.drawable.cheeseburger_2),
+        new Cheeseburger("Cheeseburger 3", 2.10, R.drawable.cheeseburger_3),
+        new Cheeseburger("Cheeseburger 4", 3.20, R.drawable.cheeseburger_4),
     };
 
     private Cheeseburger(String name, double cost, int imageResourceId) {

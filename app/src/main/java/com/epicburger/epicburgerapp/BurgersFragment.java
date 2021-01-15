@@ -28,7 +28,6 @@ public class BurgersFragment extends Fragment {
         pager.setAdapter(pagerAdapter);
 
         return rootView;
-
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {

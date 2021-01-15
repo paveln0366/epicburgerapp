@@ -1,5 +1,6 @@
 package com.epicburger.epicburgerapp;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,9 @@ public class CaptionedImagesAdapter
         textView_text.setText(captions[position]);
 
         TextView textView_cost = (TextView) cardView.findViewById(R.id.info_cost);
-        textView_cost.setText(String.valueOf(costs[position]));
+        textView_cost.setText("$" + String.valueOf(costs[position]));
+        textView_cost.setTypeface(Typeface.DEFAULT_BOLD);
+        textView_cost.setTextSize(16);
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
