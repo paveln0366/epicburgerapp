@@ -46,6 +46,7 @@ public class CheeseBurgersFragment extends Fragment {
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(getActivity());
         try {
             db = epicBurgerDatabaseHelper.getReadableDatabase();
+
             cursor = db.rawQuery("SELECT NAME FROM CHEESEBURGERS", null);
             if (cursor.moveToFirst()) {
                 ArrayList<String> names = new ArrayList<String>();
@@ -53,7 +54,7 @@ public class CheeseBurgersFragment extends Fragment {
                     names.add(cursor.getString(cursor.getColumnIndex("NAME")));
                     cursor.moveToNext();
                 }
-                String[] cheeseBurgersNamesD = names.toArray(new String[names.size()]);
+                cheeseBurgersNames = names.toArray(new String[names.size()]);
             }
 
             cursor = db.rawQuery("SELECT COST FROM CHEESEBURGERS", null);
