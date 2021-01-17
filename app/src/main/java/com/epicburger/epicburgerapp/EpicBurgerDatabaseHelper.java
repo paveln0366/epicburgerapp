@@ -10,7 +10,7 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "epicburger";
     private static final int DB_VERSION = 2;
 
-    EpicBurgerDatabaseHelper(Context context) {
+    public EpicBurgerDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -57,7 +57,7 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
             insertIntoDatabase(db, "Epic Cheeseburger",
                     "bun, cheese, big cutlet, cucumber, onion, tomato, lettuce, sauce",
                     R.drawable.cheeseburger_epic,
-                    2.50);
+                    2.55);
         }
 
         if (oldVersion < 2) {
