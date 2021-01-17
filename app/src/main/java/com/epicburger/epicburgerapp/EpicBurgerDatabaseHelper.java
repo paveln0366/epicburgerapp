@@ -32,12 +32,12 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
         values.put("DESCRIPTION", description);
         values.put("IMAGE_RESOURCE_ID", imageResourceId);
         values.put("COST", cost);
-        db.insert("BURGERS", null, values);
+        db.insert("CHEESEBURGERS", null, values);
     }
 
     private void updateDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
-            db.execSQL("CREATE TABLE BURGERS (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            db.execSQL("CREATE TABLE CHEESEBURGERS (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "DESCRIPTION TEXT, "
                     + "IMAGE_RESOURCE_ID INTEGER, "
@@ -61,8 +61,8 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
         }
 
         if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE BURGERS ADD COLUMN FAVORITE NUMERIC;");
-            db.execSQL("ALTER TABLE BURGERS ADD COLUMN NEW NUMERIC;");
+            db.execSQL("ALTER TABLE CHEESEBURGERS ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE CHEESEBURGERS ADD COLUMN NEW NUMERIC;");
         }
     }
 }
