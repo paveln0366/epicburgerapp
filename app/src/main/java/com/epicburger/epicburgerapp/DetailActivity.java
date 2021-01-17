@@ -37,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
         try {
             SQLiteDatabase db = epicBurgerDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query("CHEESEBURGERS",
-                    new String[]{"NAME", "DESCRIPTION", "IMAGE_RESOURCE_ID"},
+                    new String[]{"NAME", "COST", "IMAGE_RESOURCE_ID"},
                     "_id = ?",
                     new String[] {Integer.toString(burgerId)},
                     null, null, null);

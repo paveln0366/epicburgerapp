@@ -113,7 +113,8 @@ public class CheeseBurgersFragment extends Fragment {
                 @Override
                 public void onClick(int position) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_BURGER_ID, position);
+                    //Fix bug: ++position
+                    intent.putExtra(DetailActivity.EXTRA_BURGER_ID, ++position);
                     getActivity().startActivity(intent);
                 }
             });
