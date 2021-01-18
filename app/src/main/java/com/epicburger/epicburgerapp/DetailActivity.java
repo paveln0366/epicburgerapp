@@ -1,6 +1,8 @@
 package com.epicburger.epicburgerapp;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
@@ -15,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,14 +40,15 @@ public class DetailActivity extends AppCompatActivity {
         try {
             SQLiteDatabase db = epicBurgerDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query("CHEESEBURGERS",
-                    new String[]{"NAME", "COST", "IMAGE_RESOURCE_ID"},
+                    new String[]{"NAME", "COST", "IMAGE_RESOURCE_ID", "FAVORITE"},
                     "_id = ?",
-                    new String[] {Integer.toString(burgerId)},
+                    new String[]{Integer.toString(burgerId)},
                     null, null, null);
             if (cursor.moveToFirst()) {
                 String nameText = cursor.getString(0);
                 String description = cursor.getString(1);
                 int photoId = cursor.getInt(2);
+                boolean isFavorite = (cursor.getInt(3) == 1);
 
                 TextView detailName = (TextView) findViewById(R.id.detail_name);
                 detailName.setText(nameText);
@@ -57,6 +61,9 @@ public class DetailActivity extends AppCompatActivity {
                 ImageView detailImage = (ImageView) findViewById(R.id.detail_image);
                 detailImage.setImageDrawable(ContextCompat.getDrawable(this, photoId));
                 detailImage.setContentDescription(nameText);
+
+                CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
+                favorite.setChecked(isFavorite);
 
             }
             cursor.close();
@@ -94,5 +101,25 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         snackbar.show();
+    }
+
+    public void onFavoriteClicked(View view) {
+        int burgerId = (Integer) getIntent().getExtras().get(EXTRA_BURGER_ID);
+
+        CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
+        ContentValues itemValues = new ContentValues();
+        itemValues.put("FAVORITE", favorite.isChecked());
+
+        SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
+        try {
+            SQLiteDatabase database = epicBurgerDatabaseHelper.getWritableDatabase();
+            database.update("CHEESEBURGERS",
+                    itemValues,
+                    "_id = ?",
+                    new String[]{Integer.toString(burgerId)});
+        } catch (SQLException e) {
+            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }
