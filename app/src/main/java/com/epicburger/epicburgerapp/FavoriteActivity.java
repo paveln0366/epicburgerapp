@@ -24,6 +24,7 @@ public class FavoriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 
+        int[] itemIds = new int[4];
         String[] cheeseBurgersNames = new String[4];
         double[] cheeseBurgersCosts = new double[4];
         int[] cheeseBurgersImages = new int[4];
@@ -39,6 +40,21 @@ public class FavoriteActivity extends AppCompatActivity {
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
         try {
             db = epicBurgerDatabaseHelper.getReadableDatabase();
+
+            cursor = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
+                while (!cursor.isAfterLast()) {
+                    arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
+                    cursor.moveToNext();
+                }
+                Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
+                int i = 0;
+                for (Integer d : arrayItemIds) {
+                    itemIds[i] = (int) d;
+                    i++;
+                }
+            }
 
             cursor = db.rawQuery("SELECT NAME FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[] {"1"});
             if (cursor.moveToFirst()) {
@@ -80,7 +96,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 }
             }
 
-            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(cheeseBurgersNames, cheeseBurgersCosts, cheeseBurgersImages);
+            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(itemIds, cheeseBurgersNames, cheeseBurgersCosts, cheeseBurgersImages);
             rvFavorite.setAdapter(adapter);
 
             GridLayoutManager manager = new GridLayoutManager(this, 2);
@@ -90,7 +106,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 @Override
                 public void onClick(int position) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_BURGER_ID, ++position);
+                    intent.putExtra(DetailActivity.EXTRA_BURGER_ID, itemIds[position]);
                     startActivity(intent);
                 }
             });

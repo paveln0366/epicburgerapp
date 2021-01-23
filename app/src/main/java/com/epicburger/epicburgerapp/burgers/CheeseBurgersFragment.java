@@ -39,6 +39,7 @@ public class CheeseBurgersFragment extends Fragment {
         RecyclerView cheeseRecycler = (RecyclerView) inflater.inflate(
                 R.layout.fragment_cheese_burgers, container, false);
 
+        int[] itemIds = new int[4];
         String[] cheeseBurgersNames = new String[4];
         double[] cheeseBurgersCosts = new double[4];
         int[] cheeseBurgersImages = new int[4];
@@ -46,6 +47,21 @@ public class CheeseBurgersFragment extends Fragment {
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(getActivity());
         try {
             db = epicBurgerDatabaseHelper.getReadableDatabase();
+
+            cursor = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
+                while (!cursor.isAfterLast()) {
+                    arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
+                    cursor.moveToNext();
+                }
+                Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
+                int i = 0;
+                for (Integer d : arrayItemIds) {
+                    itemIds[i] = (int) d;
+                    i++;
+                }
+            }
 
             cursor = db.rawQuery("SELECT NAME FROM CHEESEBURGERS", null);
             if (cursor.moveToFirst()) {
@@ -103,7 +119,7 @@ public class CheeseBurgersFragment extends Fragment {
 //                detailImage.setContentDescription(nameText);
 
 
-            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(cheeseBurgersNames, cheeseBurgersCosts, cheeseBurgersImages);
+            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(itemIds, cheeseBurgersNames, cheeseBurgersCosts, cheeseBurgersImages);
             cheeseRecycler.setAdapter(adapter);
 
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);

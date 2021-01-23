@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CaptionedImagesAdapter
         extends RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder> {
 
+    private int[] itemIds;
     private String[] captions;
     private double[] costs;
     private int[] imageIds;
@@ -35,10 +36,11 @@ public class CaptionedImagesAdapter
         }
     }
 
-    public CaptionedImagesAdapter(String[] captions, double[] costs, int[] imageIds) {
+    public CaptionedImagesAdapter(int[] itemIds, String[] captions, double[] costs, int[] imageIds) {
         this.captions = captions;
         this.costs = costs;
         this.imageIds = imageIds;
+        this.itemIds = itemIds;
     }
 
 
@@ -55,8 +57,7 @@ public class CaptionedImagesAdapter
     // Сreate ViewHolder
     @Override
     public CaptionedImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView cv = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_captioned_image, parent, false);
+        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_captioned_image, parent, false);
         return new ViewHolder(cv);
     }
 
@@ -78,6 +79,7 @@ public class CaptionedImagesAdapter
             textView_cost.setTextSize(16);
 
             textView_text.setText(captions[position]);
+            //textView_text.setText(String.valueOf(itemIds[position]));
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
