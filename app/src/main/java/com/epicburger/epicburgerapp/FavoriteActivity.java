@@ -50,7 +50,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 cheeseBurgersNames = names.toArray(new String[names.size()]);
             }
 
-            cursor = db.rawQuery("SELECT COST FROM CHEESEBURGERS", null);
+            cursor = db.rawQuery("SELECT COST FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
             if (cursor.moveToFirst()) {
                 ArrayList<Double> cost = new ArrayList<Double>();
                 while (!cursor.isAfterLast()) {
@@ -65,7 +65,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 }
             }
 
-            cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS", null);
+            cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
             if (cursor.moveToFirst()) {
                 ArrayList<Integer> imageId = new ArrayList<Integer>();
                 while (!cursor.isAfterLast()) {

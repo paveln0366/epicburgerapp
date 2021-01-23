@@ -63,28 +63,32 @@ public class CaptionedImagesAdapter
     // Connect data with ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        CardView cardView = holder.cardView;
+        if (captions[position] != null) {
+            CardView cardView = holder.cardView;
+            ImageView imageView = (ImageView) cardView.findViewById(R.id.info_image);
+            TextView textView_cost = (TextView) cardView.findViewById(R.id.info_cost);
+            TextView textView_text = (TextView) cardView.findViewById(R.id.info_text);
 
-        ImageView imageView = (ImageView) cardView.findViewById(R.id.info_image);
-        Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), imageIds[position]);
-        imageView.setImageDrawable(drawable);
-        imageView.setContentDescription(captions[position]);
+            Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), imageIds[position]);
+            imageView.setImageDrawable(drawable);
+            imageView.setContentDescription(captions[position]);
 
-        TextView textView_text = (TextView) cardView.findViewById(R.id.info_text);
-        textView_text.setText(captions[position]);
+            textView_cost.setText("$" + String.valueOf(costs[position]));
+            textView_cost.setTypeface(Typeface.DEFAULT_BOLD);
+            textView_cost.setTextSize(16);
 
-        TextView textView_cost = (TextView) cardView.findViewById(R.id.info_cost);
-        textView_cost.setText("$" + String.valueOf(costs[position]));
-        textView_cost.setTypeface(Typeface.DEFAULT_BOLD);
-        textView_cost.setTextSize(16);
+            textView_text.setText(captions[position]);
 
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onClick(position);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(position);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            // Do not fill in the cards
+        }
     }
 }
