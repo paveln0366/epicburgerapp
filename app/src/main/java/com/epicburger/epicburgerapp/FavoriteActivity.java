@@ -12,6 +12,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 public class FavoriteActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,8 @@ public class FavoriteActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         RecyclerView rvFavorite = (RecyclerView) findViewById(R.id.rv_favorite);
+        LinearLayout llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
+
 
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
         try {
@@ -43,6 +49,8 @@ public class FavoriteActivity extends AppCompatActivity {
 
             cursor = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
             if (cursor.moveToFirst()) {
+                rvFavorite.setVisibility(View.VISIBLE);
+                llNoFavorite.setVisibility(View.GONE);
                 ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
                 while (!cursor.isAfterLast()) {
                     arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
