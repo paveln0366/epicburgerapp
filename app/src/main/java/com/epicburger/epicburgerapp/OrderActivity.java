@@ -1,16 +1,12 @@
 package com.epicburger.epicburgerapp;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -26,5 +22,15 @@ public class OrderActivity extends AppCompatActivity {
         // Add up button in toolbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // Fill list view
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.chicken_burgers)
+        );
+
+        ListView orderList = (ListView) findViewById(R.id.order_list);
+        orderList.setAdapter(adapter);
     }
 }
