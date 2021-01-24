@@ -42,17 +42,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
             <TextView
                 android:id="@+id/detail_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detail_name"
-                android:textSize="26sp"/>
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/detail_cost"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/detail_cost"/>
+                android:text="@string/detail_cost"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"/>
 
             <CheckBox
                 android:id="@+id/favorite"
@@ -60,26 +67,39 @@
                 android:layout_height="wrap_content"
                 android:text="@string/favorite"
                 android:onClick="onFavoriteClicked"/>
+            <TextView
+                android:id="@+id/detail_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description, description, description, description, description."/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:text="-"
-                    android:textSize="26sp"/>
+                    android:textSize="26sp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:onClick="minusNumberOfFood"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_number_of_food"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="1"
-                    android:textSize="36sp"/>
+                    android:textSize="36sp"
+                    android:gravity="center"/>
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:text="+"
-                    android:textSize="26sp"/>
+                    android:textSize="26sp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:onClick="plusNumberOfFood"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -90,5 +110,6 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_done"
+        android:tint="@color/white"
         android:onClick="onClickDone"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

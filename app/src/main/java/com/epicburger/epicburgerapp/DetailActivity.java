@@ -5,36 +5,42 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.snackbar.Snackbar;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_BURGER_ID = "burgerId";
+    private int numberOfFood = 1;
+    private TextView tvNumberOfFood;
+    private String foodTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+
         int burgerId = (Integer) getIntent().getExtras().get(EXTRA_BURGER_ID);
+        tvNumberOfFood = (TextView) findViewById(R.id.tv_number_of_food);
 
         // Create cursor
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
@@ -56,8 +62,6 @@ public class DetailActivity extends AppCompatActivity {
 
                 TextView tvCost = (TextView) findViewById(R.id.detail_cost);
                 tvCost.setText("$" + String.valueOf(description));
-                tvCost.setTypeface(Typeface.DEFAULT_BOLD);
-                tvCost.setTextSize(16);
 
                 ImageView detailImage = (ImageView) findViewById(R.id.detail_image);
                 detailImage.setImageDrawable(ContextCompat.getDrawable(this, photoId));
@@ -158,5 +162,15 @@ public class DetailActivity extends AppCompatActivity {
                 toast.show();
             }
         }
+    }
+
+    public void minusNumberOfFood(View view) {
+        if (Integer.parseInt((String) tvNumberOfFood.getText()) > 1) {
+            tvNumberOfFood.setText(String.valueOf(--numberOfFood));
+        }
+    }
+
+    public void plusNumberOfFood(View view) {
+        tvNumberOfFood.setText(String.valueOf(++numberOfFood));
     }
 }
