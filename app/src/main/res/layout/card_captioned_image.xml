@@ -6,7 +6,7 @@
     android:layout_height="200dp"
     android:layout_margin="4dp"
     card_view:cardElevation="2dp"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,17 +22,31 @@
 
         <TextView
             android:id="@+id/info_cost"
-            android:layout_marginLeft="4dp"
-            android:layout_marginBottom="4dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="1dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="food_cost"/>
 
         <TextView
             android:id="@+id/info_text"
-            android:layout_marginLeft="4dp"
-            android:layout_marginBottom="4dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingTop="1dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="food_name"/>
 
     </LinearLayout>
 

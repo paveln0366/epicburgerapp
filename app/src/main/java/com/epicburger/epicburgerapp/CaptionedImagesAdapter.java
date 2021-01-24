@@ -75,8 +75,6 @@ public class CaptionedImagesAdapter
             imageView.setContentDescription(captions[position]);
 
             textView_cost.setText("$" + String.valueOf(costs[position]));
-            textView_cost.setTypeface(Typeface.DEFAULT_BOLD);
-            textView_cost.setTextSize(16);
 
             textView_text.setText(captions[position]);
             //textView_text.setText(String.valueOf(itemIds[position]));
