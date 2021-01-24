@@ -4,101 +4,109 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.epicburger.epicburgerapp.CaptionedImagesAdapter;
-import com.epicburger.epicburgerapp.Cheeseburger;
 import com.epicburger.epicburgerapp.DetailActivity;
 import com.epicburger.epicburgerapp.EpicBurgerDatabaseHelper;
 import com.epicburger.epicburgerapp.R;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
-public class CheeseBurgersFragment extends Fragment {
+public class FoodFragment extends Fragment {
 
     private SQLiteDatabase db;
     private Cursor cursor;
+    private int numberOfFoods;
+    private String foodTable;
+
+    public FoodFragment(String foodTable) {
+        this.foodTable = foodTable;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView cheeseRecycler = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_burgers, container, false);
+        RecyclerView foodRecycler = (RecyclerView) inflater.inflate(
+                R.layout.fragment_food, container, false);
 
-        int[] itemIds = new int[4];
-        String[] cheeseBurgersNames = new String[4];
-        double[] cheeseBurgersCosts = new double[4];
-        int[] cheeseBurgersImages = new int[4];
+        int[] foodIds = new int[0];
+        String[] foodNames = new String[0];
+        double[] foodCosts = new double[0];
+        int[] foodImages = new int[0];
 
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(getActivity());
         try {
             db = epicBurgerDatabaseHelper.getReadableDatabase();
 
-            cursor = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+            cursor = db.rawQuery("SELECT _id FROM " + foodTable, null);
+            numberOfFoods = 0;
             if (cursor.moveToFirst()) {
                 ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
                 while (!cursor.isAfterLast()) {
+                    numberOfFoods++;
                     arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
                     cursor.moveToNext();
                 }
+                foodIds = new int[numberOfFoods];
                 Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
                 int i = 0;
                 for (Integer d : arrayItemIds) {
-                    itemIds[i] = (int) d;
+                    foodIds[i] = (int) d;
                     i++;
                 }
             }
 
-            cursor = db.rawQuery("SELECT NAME FROM CHEESEBURGERS", null);
+            cursor = db.rawQuery("SELECT NAME FROM " + foodTable, null);
             if (cursor.moveToFirst()) {
                 ArrayList<String> names = new ArrayList<String>();
                 while (!cursor.isAfterLast()) {
                     names.add(cursor.getString(cursor.getColumnIndex("NAME")));
                     cursor.moveToNext();
                 }
-                cheeseBurgersNames = names.toArray(new String[names.size()]);
+                foodNames = names.toArray(new String[names.size()]);
             }
 
-            cursor = db.rawQuery("SELECT COST FROM CHEESEBURGERS", null);
+            cursor = db.rawQuery("SELECT COST FROM " + foodTable, null);
+            numberOfFoods = 0;
             if (cursor.moveToFirst()) {
                 ArrayList<Double> cost = new ArrayList<Double>();
                 while (!cursor.isAfterLast()) {
+                    numberOfFoods++;
                     cost.add(cursor.getDouble(cursor.getColumnIndex("COST")));
                     cursor.moveToNext();
                 }
+                foodCosts = new double[numberOfFoods];
                 Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
                 int i = 0;
                 for (Double d : cheeseBurgersCostsD) {
-                    cheeseBurgersCosts[i] = (double) d;
+                    foodCosts[i] = (double) d;
                     i++;
                 }
             }
 
-            cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS", null);
+            cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM " + foodTable, null);
+            numberOfFoods = 0;
             if (cursor.moveToFirst()) {
                 ArrayList<Integer> imageId = new ArrayList<Integer>();
                 while (!cursor.isAfterLast()) {
+                    numberOfFoods++;
                     imageId.add(cursor.getInt(cursor.getColumnIndex("IMAGE_RESOURCE_ID")));
                     cursor.moveToNext();
                 }
+                foodImages = new int[numberOfFoods];
                 Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
                 int i = 0;
                 for (Integer d : cheeseBurgersImagesD) {
-                    cheeseBurgersImages[i] = (int) d;
+                    foodImages[i] = (int) d;
                     i++;
                 }
             }
@@ -119,11 +127,11 @@ public class CheeseBurgersFragment extends Fragment {
 //                detailImage.setContentDescription(nameText);
 
 
-            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(itemIds, cheeseBurgersNames, cheeseBurgersCosts, cheeseBurgersImages);
-            cheeseRecycler.setAdapter(adapter);
+            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages);
+            foodRecycler.setAdapter(adapter);
 
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-            cheeseRecycler.setLayoutManager(gridLayoutManager);
+            foodRecycler.setLayoutManager(gridLayoutManager);
 
             adapter.setListener(new CaptionedImagesAdapter.Listener() {
                 @Override
@@ -158,6 +166,6 @@ public class CheeseBurgersFragment extends Fragment {
 //        }
 
 
-        return cheeseRecycler;
+        return foodRecycler;
     }
 }

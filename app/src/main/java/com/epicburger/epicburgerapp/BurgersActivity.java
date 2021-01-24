@@ -11,8 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.epicburger.epicburgerapp.burgers.CheeseBurgersFragment;
 import com.epicburger.epicburgerapp.burgers.ChickenBurgersFragment;
+import com.epicburger.epicburgerapp.burgers.FoodFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class BurgersActivity extends AppCompatActivity {
@@ -55,7 +55,7 @@ public class BurgersActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new CheeseBurgersFragment();
+                    return new FoodFragment("CHEESEBURGERS");
                 case 1:
                     return new ChickenBurgersFragment();
             }

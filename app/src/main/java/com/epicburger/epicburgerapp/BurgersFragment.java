@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.epicburger.epicburgerapp.burgers.CheeseBurgersFragment;
+import com.epicburger.epicburgerapp.burgers.FoodFragment;
 import com.epicburger.epicburgerapp.burgers.ChickenBurgersFragment;
 
 public class BurgersFragment extends Fragment {
@@ -45,7 +45,7 @@ public class BurgersFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new CheeseBurgersFragment();
+                    return new FoodFragment("CHEESEBURGERS");
                 case 1:
                     return new ChickenBurgersFragment();
             }
