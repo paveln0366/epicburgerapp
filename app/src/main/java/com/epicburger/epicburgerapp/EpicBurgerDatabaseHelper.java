@@ -44,19 +44,19 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
                     + "COST REAL);");
             insertIntoDatabase(db, "Standard Cheeseburger",
                     "bun, cheese, cutlet, cucumber, onion, sauce",
-                    R.drawable.cheeseburger_standard,
+                    R.drawable.burger_cheeseburger_standard,
                     1.20);
             insertIntoDatabase(db, "Double Cheeseburger",
                     "bun, cheese, 2x cutlet, cucumber, onion, sauce",
-                    R.drawable.cheeseburger_double,
+                    R.drawable.burger_cheeseburger_double,
                     1.50);
             insertIntoDatabase(db, "Junior Cheeseburger",
                     "bun, cheese, cutlet, cucumber, onion, tomato, lettuce, sauce",
-                    R.drawable.cheeseburger_junior,
+                    R.drawable.burger_cheeseburger_junior,
                     2.20);
             insertIntoDatabase(db, "Epic Cheeseburger",
                     "bun, cheese, big cutlet, cucumber, onion, tomato, lettuce, sauce",
-                    R.drawable.cheeseburger_epic,
+                    R.drawable.burger_cheeseburger_epic,
                     2.55);
         }
 
