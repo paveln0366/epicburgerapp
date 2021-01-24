@@ -138,7 +138,8 @@ public class FoodFragment extends Fragment {
                 public void onClick(int position) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     //Fix bug: ++position
-                    intent.putExtra(DetailActivity.EXTRA_BURGER_ID, ++position);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, ++position);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable);
                     getActivity().startActivity(intent);
                 }
             });
@@ -146,7 +147,7 @@ public class FoodFragment extends Fragment {
             cursor.close();
             db.close();
         } catch (Exception e) {
-            Toast toast = Toast.makeText(getActivity(), "Database unavailable!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getActivity(), "Database unavailable! FoodFragment", Toast.LENGTH_SHORT);
             toast.show();
         }
 

@@ -14,10 +14,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+// TODO: Update this activity for different tables
 
 public class FavoriteActivity extends AppCompatActivity {
     private SQLiteDatabase db;
@@ -128,12 +129,13 @@ public class FavoriteActivity extends AppCompatActivity {
                 @Override
                 public void onClick(int position) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_BURGER_ID, itemIds[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, itemIds[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, "CHEESEBURGERS");
                     startActivity(intent);
                 }
             });
         } catch (SQLException e) {
-            Toast toast = Toast.makeText(this, "Database unavailable!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Database unavailable! FavoriteActivity", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -219,7 +221,8 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_BURGER_ID, itemIds[position]);
+                intent.putExtra(DetailActivity.EXTRA_FOOD_ID, itemIds[position]);
+                intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, "CHEESEBURGERS");
                 startActivity(intent);
             }
         });

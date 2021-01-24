@@ -22,10 +22,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_BURGER_ID = "burgerId";
+    public static final String EXTRA_FOOD_ID = "foodId";
+    public static final String EXTRA_FOOD_TABLE = "foodTable";
     private int numberOfFood = 1;
     private TextView tvNumberOfFood;
-    private String foodTable;
+    private TextView tvDetailCost;
+    private double costTemp = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,29 +41,32 @@ public class DetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        int burgerId = (Integer) getIntent().getExtras().get(EXTRA_BURGER_ID);
+        String foodTable = (String) getIntent().getExtras().get(EXTRA_FOOD_TABLE);
+
+        int foodId = (Integer) getIntent().getExtras().get(EXTRA_FOOD_ID);
         tvNumberOfFood = (TextView) findViewById(R.id.tv_number_of_food);
+        tvDetailCost = (TextView) findViewById(R.id.tv_detail_cost);
 
         // Create cursor
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
         try {
             SQLiteDatabase db = epicBurgerDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.query("CHEESEBURGERS",
+            Cursor cursor = db.query(foodTable,
                     new String[]{"NAME", "COST", "IMAGE_RESOURCE_ID", "FAVORITE"},
                     "_id = ?",
-                    new String[]{Integer.toString(burgerId)},
+                    new String[]{Integer.toString(foodId)},
                     null, null, null);
             if (cursor.moveToFirst()) {
                 String nameText = cursor.getString(0);
-                String description = cursor.getString(1);
+                Double cost = cursor.getDouble(1);
                 int photoId = cursor.getInt(2);
                 boolean isFavorite = (cursor.getInt(3) == 1);
 
                 TextView detailName = (TextView) findViewById(R.id.detail_name);
                 detailName.setText(nameText);
 
-                TextView tvCost = (TextView) findViewById(R.id.detail_cost);
-                tvCost.setText("$" + String.valueOf(description));
+                costTemp = cost;
+                tvDetailCost.setText("$" + String.format("%.2f", cost));
 
                 ImageView detailImage = (ImageView) findViewById(R.id.detail_image);
                 detailImage.setImageDrawable(ContextCompat.getDrawable(this, photoId));
@@ -74,7 +79,7 @@ public class DetailActivity extends AppCompatActivity {
             cursor.close();
             db.close();
         } catch (Exception e) {
-            Toast toast = Toast.makeText(this, "Database unavailable!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Database unavailable! onCreate", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -109,8 +114,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void onFavoriteClicked(View view) {
-        int burgerId = (Integer) getIntent().getExtras().get(EXTRA_BURGER_ID);
-        new UpdateFavoriteTask().execute(burgerId);
+        int foodId = (Integer) getIntent().getExtras().get(EXTRA_FOOD_ID);
+        new UpdateFavoriteTask().execute(foodId);
 
 //        CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
 //        ContentValues itemValues = new ContentValues();
@@ -142,12 +147,13 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Integer... itemIds) {
-            int itemId = itemIds[0];
+            String foodTable = (String) getIntent().getExtras().get(EXTRA_FOOD_TABLE);
+            int foodId = itemIds[0];
             SQLiteOpenHelper helper = new EpicBurgerDatabaseHelper(DetailActivity.this);
             try {
                 SQLiteDatabase database = helper.getWritableDatabase();
-                database.update("CHEESEBURGERS", values,
-                        "_id = ?", new String[]{Integer.toString(itemId)});
+                database.update(foodTable, values,
+                        "_id = ?", new String[]{Integer.toString(foodId)});
                 database.close();
                 return true;
             } catch (SQLException exception) {
@@ -158,7 +164,7 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if (!success) {
-                Toast toast = Toast.makeText(DetailActivity.this, "Database unavailable!", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(DetailActivity.this, "Database unavailable! DetailActivity UpdateFavoriteTask", Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
@@ -167,10 +173,14 @@ public class DetailActivity extends AppCompatActivity {
     public void minusNumberOfFood(View view) {
         if (Integer.parseInt((String) tvNumberOfFood.getText()) > 1) {
             tvNumberOfFood.setText(String.valueOf(--numberOfFood));
+            Double cost = costTemp * Double.parseDouble((String) tvNumberOfFood.getText());
+            tvDetailCost.setText("$" + String.format("%.2f", cost));
         }
     }
 
     public void plusNumberOfFood(View view) {
         tvNumberOfFood.setText(String.valueOf(++numberOfFood));
+        Double cost = costTemp * Double.parseDouble((String) tvNumberOfFood.getText());
+        tvDetailCost.setText("$" + String.format("%.2f", cost));
     }
 }

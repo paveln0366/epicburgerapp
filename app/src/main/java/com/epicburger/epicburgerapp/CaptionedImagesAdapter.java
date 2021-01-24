@@ -74,7 +74,7 @@ public class CaptionedImagesAdapter
             imageView.setImageDrawable(drawable);
             imageView.setContentDescription(captions[position]);
 
-            textView_cost.setText("$" + String.valueOf(costs[position]));
+            textView_cost.setText("$" + String.format("%.2f", costs[position]));
 
             textView_text.setText(captions[position]);
             //textView_text.setText(String.valueOf(itemIds[position]));

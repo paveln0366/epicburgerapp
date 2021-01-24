@@ -52,7 +52,7 @@
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
             <TextView
-                android:id="@+id/detail_cost"
+                android:id="@+id/tv_detail_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detail_cost"
