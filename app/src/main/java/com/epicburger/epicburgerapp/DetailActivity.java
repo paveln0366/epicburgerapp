@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -105,21 +106,57 @@ public class DetailActivity extends AppCompatActivity {
 
     public void onFavoriteClicked(View view) {
         int burgerId = (Integer) getIntent().getExtras().get(EXTRA_BURGER_ID);
+        new UpdateFavoriteTask().execute(burgerId);
 
-        CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
-        ContentValues itemValues = new ContentValues();
-        itemValues.put("FAVORITE", favorite.isChecked());
+//        CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
+//        ContentValues itemValues = new ContentValues();
+//        itemValues.put("FAVORITE", favorite.isChecked());
+//
+//        SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
+//        try {
+//            SQLiteDatabase database = epicBurgerDatabaseHelper.getWritableDatabase();
+//            database.update("CHEESEBURGERS",
+//                    itemValues,
+//                    "_id = ?",
+//                    new String[]{Integer.toString(burgerId)});
+//        database.close();
+//        } catch (SQLException e) {
+//            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+    }
 
-        SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
-        try {
-            SQLiteDatabase database = epicBurgerDatabaseHelper.getWritableDatabase();
-            database.update("CHEESEBURGERS",
-                    itemValues,
-                    "_id = ?",
-                    new String[]{Integer.toString(burgerId)});
-        } catch (SQLException e) {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
+    private class UpdateFavoriteTask extends AsyncTask<Integer, Void, Boolean> {
+        private ContentValues values;
+
+        @Override
+        protected void onPreExecute() {
+            CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
+            values = new ContentValues();
+            values.put("FAVORITE", favorite.isChecked());
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... itemIds) {
+            int itemId = itemIds[0];
+            SQLiteOpenHelper helper = new EpicBurgerDatabaseHelper(DetailActivity.this);
+            try {
+                SQLiteDatabase database = helper.getWritableDatabase();
+                database.update("CHEESEBURGERS", values,
+                        "_id = ?", new String[]{Integer.toString(itemId)});
+                database.close();
+                return true;
+            } catch (SQLException exception) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (!success) {
+                Toast toast = Toast.makeText(DetailActivity.this, "Database unavailable!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 }
