@@ -69,7 +69,7 @@ public class FavoriteActivity extends AppCompatActivity {
             tablesList.add("CHEESEBURGERS");
             tablesList.add("CHICKENBURGERS");
 
-            ArrayList sqlData = sqlSelector(tablesList, rvFavorite, llNoFavorite);
+            ArrayList<ArrayList<?>> sqlData = sqlSelector(tablesList, rvFavorite, llNoFavorite);
 
             ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
             ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
@@ -136,9 +136,6 @@ public class FavoriteActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         try {
-            rvFavorite = (RecyclerView) findViewById(R.id.rv_favorite);
-            llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
-
             ArrayList<String> tablesList = new ArrayList();
             tablesList.add("CHEESEBURGERS");
             tablesList.add("CHICKENBURGERS");
@@ -183,7 +180,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 c++;
             }
 
-            foodTable = tableNameList.toArray(new String[tableNameList.size()]);
+            foodTableRestart = tableNameList.toArray(new String[tableNameList.size()]);
 
             adapter = new CaptionedImagesAdapter(foodIdsRestart, foodNamesRestart, foodCostsRestart, foodImagesRestart);
             rvFavorite.setAdapter(adapter);
@@ -196,7 +193,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 public void onClick(int position) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
                     intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTableRestart[position]);
                     //intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, tableName);
                     startActivity(intent);
                 }
@@ -214,7 +211,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     public ArrayList sqlSelector(ArrayList<String> tablesList, RecyclerView rvFavorite, LinearLayout llNoFavorite) {
 
-        ArrayList<ArrayList<?>> sqlData = new ArrayList();
+        ArrayList<ArrayList<?>> sqlData = new ArrayList<ArrayList<?>>();
 
         ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
         ArrayList<String> names = new ArrayList<String>();
@@ -284,7 +281,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     public ArrayList sqlSelectorRestart(ArrayList<String> tablesList, RecyclerView rvFavorite, LinearLayout llNoFavorite) {
 
-        ArrayList sqlData = new ArrayList();
+        ArrayList<ArrayList<?>> sqlData = new ArrayList<ArrayList<?>>();
 
         ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
         ArrayList<String> names = new ArrayList<String>();
