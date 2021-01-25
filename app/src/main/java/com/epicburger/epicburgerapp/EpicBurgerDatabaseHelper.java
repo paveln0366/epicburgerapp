@@ -29,12 +29,14 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
                                            String name,
                                            String description,
                                            int imageResourceId,
-                                           double cost) {
+                                           double cost,
+                                           String foodTable) {
         ContentValues values = new ContentValues();
         values.put("NAME", name);
         values.put("DESCRIPTION", description);
         values.put("IMAGE_RESOURCE_ID", imageResourceId);
         values.put("COST", cost);
+        values.put("FOOD_TABLE", foodTable);
         db.insert(table, null, values);
     }
 
@@ -44,49 +46,51 @@ public class EpicBurgerDatabaseHelper extends SQLiteOpenHelper {
                     + "NAME TEXT, "
                     + "DESCRIPTION TEXT, "
                     + "IMAGE_RESOURCE_ID INTEGER, "
-                    + "COST REAL);");
+                    + "COST REAL, "
+                    + "FOOD_TABLE);");
             insertIntoDatabase(db, "CHEESEBURGERS","Standard Cheeseburger",
                     "bun, cheese, cutlet, cucumber, onion, sauce",
                     R.drawable.burger_cheeseburger_standard,
-                    1.20);
+                    1.20, "CHEESEBURGERS");
             insertIntoDatabase(db, "CHEESEBURGERS","Double Cheeseburger",
                     "bun, cheese, 2x cutlet, cucumber, onion, sauce",
                     R.drawable.burger_cheeseburger_double,
-                    1.50);
+                    1.50, "CHEESEBURGERS");
             insertIntoDatabase(db, "CHEESEBURGERS","Junior Cheeseburger",
                     "bun, cheese, cutlet, cucumber, onion, tomato, lettuce, sauce",
                     R.drawable.burger_cheeseburger_junior,
-                    2.20);
+                    2.20, "CHEESEBURGERS");
             insertIntoDatabase(db, "CHEESEBURGERS","Epic Cheeseburger",
                     "bun, cheese, big cutlet, cucumber, onion, tomato, lettuce, sauce",
                     R.drawable.burger_cheeseburger_epic,
-                    2.55);
+                    2.55, "CHEESEBURGERS");
 
             db.execSQL("CREATE TABLE CHICKENBURGERS (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "DESCRIPTION TEXT, "
                     + "IMAGE_RESOURCE_ID INTEGER, "
-                    + "COST REAL);");
+                    + "COST REAL, "
+                    + "FOOD_TABLE);");
             insertIntoDatabase(db, "CHICKENBURGERS","Junior Chickenburger",
                     "bun, cutlet, lettuce, sauce",
                     R.drawable.burger_chickenburger_junior,
-                    1.30);
+                    1.30, "CHICKENBURGERS");
             insertIntoDatabase(db, "CHICKENBURGERS","Double Chickenburger",
                     "bun, cheese, 2x cutlet, cucumber, onion, sauce",
                     R.drawable.burger_chickenburger_double,
-                    1.60);
+                    1.60, "CHICKENBURGERS");
             insertIntoDatabase(db, "CHICKENBURGERS","Delux Chickenburger",
                     "bun, cheese, cutlet, cucumber, onion, tomato, sauce",
                     R.drawable.burger_chickenburger_delux,
-                    2.40);
+                    2.40, "CHICKENBURGERS");
             insertIntoDatabase(db, "CHICKENBURGERS","Chef Chickenburger",
                     "bun, big cutlet, cucumber, onion, tomato, sauce",
                     R.drawable.burger_chickenburger_chef,
-                    2.50);
+                    2.50, "CHICKENBURGERS");
             insertIntoDatabase(db, "CHICKENBURGERS","XXL Chickenburger",
                     "bun, cheese, 2х big cutlet, cucumber, onion, lettuce, sauce",
                     R.drawable.burger_chickenburger_xxl,
-                    3.00);
+                    3.00, "CHICKENBURGERS");
         }
 
         if (oldVersion < 2) {

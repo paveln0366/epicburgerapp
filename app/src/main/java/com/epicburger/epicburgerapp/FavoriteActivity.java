@@ -24,17 +24,19 @@ public class FavoriteActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
     private Cursor cursorRestart;
-    private int numberOfFoods;
+    //private int numberOfFoods;
 
     int[] foodIds = new int[0];
     String[] foodNames = new String[0];
     double[] foodCosts = new double[0];
     int[] foodImages = new int[0];
+    String[] foodTable = new String[0];
 
     int[] foodIdsRestart = new int[0];
     String[] foodNamesRestart = new String[0];
     double[] foodCostsRestart = new double[0];
     int[] foodImagesRestart = new int[0];
+    String[] foodTableRestart = new String[0];
 
     CaptionedImagesAdapter adapter;
     GridLayoutManager manager;
@@ -48,12 +50,12 @@ public class FavoriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorite);
 
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         rvFavorite = (RecyclerView) findViewById(R.id.rv_favorite);
         llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
@@ -63,71 +65,50 @@ public class FavoriteActivity extends AppCompatActivity {
         try {
             db = epicBurgerDatabaseHelper.getReadableDatabase();
 
-            cursor = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
-            numberOfFoods = 0;
-            if (cursor.moveToFirst()) {
-                rvFavorite.setVisibility(View.VISIBLE);
-                llNoFavorite.setVisibility(View.GONE);
-                ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
-                while (!cursor.isAfterLast()) {
-                    numberOfFoods++;
-                    arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
-                    cursor.moveToNext();
-                }
-                foodIds = new int[numberOfFoods];
-                Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
-                int i = 0;
-                for (Integer d : arrayItemIds) {
-                    foodIds[i] = (int) d;
-                    i++;
-                }
+            ArrayList<String> tablesList = new ArrayList();
+            tablesList.add("CHEESEBURGERS");
+            tablesList.add("CHICKENBURGERS");
+
+            ArrayList sqlData = sqlSelector(tablesList, rvFavorite, llNoFavorite);
+
+            ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
+            ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
+            ArrayList<Double> cost = (ArrayList<Double>) sqlData.get(2);
+            ArrayList<Integer> imageId = (ArrayList<Integer>) sqlData.get(3);
+            ArrayList<String> tableNameList = (ArrayList<String>) sqlData.get(4);
+
+            int numberOfFoods = 0;
+            for (Integer index : arrayListItemIds) {
+                numberOfFoods++;
             }
 
-            cursor = db.rawQuery("SELECT NAME FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[] {"1"});
-            if (cursor.moveToFirst()) {
-                ArrayList<String> names = new ArrayList<String>();
-                while (!cursor.isAfterLast()) {
-                    names.add(cursor.getString(cursor.getColumnIndex("NAME")));
-                    cursor.moveToNext();
-                }
-                foodNames = names.toArray(new String[names.size()]);
+            foodIds = new int[numberOfFoods];
+            Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
+            int a = 0;
+            for (Integer d : arrayItemIds) {
+                foodIds[a] = (int) d;
+                a++;
             }
 
-            cursor = db.rawQuery("SELECT COST FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
-            numberOfFoods = 0;
-            if (cursor.moveToFirst()) {
-                ArrayList<Double> cost = new ArrayList<Double>();
-                while (!cursor.isAfterLast()) {
-                    numberOfFoods++;
-                    cost.add(cursor.getDouble(cursor.getColumnIndex("COST")));
-                    cursor.moveToNext();
-                }
-                foodCosts = new double[numberOfFoods];
-                Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
-                int i = 0;
-                for (Double d : cheeseBurgersCostsD) {
-                    foodCosts[i] = (double) d;
-                    i++;
-                }
+            foodNames = names.toArray(new String[names.size()]);
+
+            foodCosts = new double[numberOfFoods];
+            Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
+            int b = 0;
+            for (Double d : cheeseBurgersCostsD) {
+                foodCosts[b] = (double) d;
+                b++;
             }
 
-            cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
-            numberOfFoods = 0;
-            if (cursor.moveToFirst()) {
-                ArrayList<Integer> imageId = new ArrayList<Integer>();
-                while (!cursor.isAfterLast()) {
-                    numberOfFoods++;
-                    imageId.add(cursor.getInt(cursor.getColumnIndex("IMAGE_RESOURCE_ID")));
-                    cursor.moveToNext();
-                }
-                foodImages = new int[numberOfFoods];
-                Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
-                int i = 0;
-                for (Integer d : cheeseBurgersImagesD) {
-                    foodImages[i] = (int) d;
-                    i++;
-                }
+            foodImages = new int[numberOfFoods];
+            Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
+            int c = 0;
+            for (Integer d : cheeseBurgersImagesD) {
+                foodImages[c] = (int) d;
+                c++;
             }
+
+            foodTable = tableNameList.toArray(new String[tableNameList.size()]);
 
             adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages);
             rvFavorite.setAdapter(adapter);
@@ -140,10 +121,11 @@ public class FavoriteActivity extends AppCompatActivity {
                 public void onClick(int position) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
                     intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, "CHEESEBURGERS");
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable[position]);
                     startActivity(intent);
                 }
             });
+
         } catch (SQLException e) {
             Toast toast = Toast.makeText(this, "Database unavailable! FavoriteActivity", Toast.LENGTH_SHORT);
             toast.show();
@@ -153,101 +135,219 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        try {
+            rvFavorite = (RecyclerView) findViewById(R.id.rv_favorite);
+            llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
 
-        rvFavorite = (RecyclerView) findViewById(R.id.rv_favorite);
-       llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
+            ArrayList<String> tablesList = new ArrayList();
+            tablesList.add("CHEESEBURGERS");
+            tablesList.add("CHICKENBURGERS");
 
-        cursorRestart = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
-        numberOfFoods = 0;
-        if (cursorRestart.moveToFirst()) {
-            ///////////////////////////////////////////
-            rvFavorite.setVisibility(View.VISIBLE);
-            llNoFavorite.setVisibility(View.GONE);
-            ///////////////////////////////////////////
-            ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
-            while (!cursorRestart.isAfterLast()) {
+            ArrayList<ArrayList<?>> sqlData = sqlSelectorRestart(tablesList, rvFavorite, llNoFavorite);
+
+            ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
+            ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
+            ArrayList<Double> cost = (ArrayList<Double>) sqlData.get(2);
+            ArrayList<Integer> imageId = (ArrayList<Integer>) sqlData.get(3);
+            ArrayList<String> tableNameList = (ArrayList<String>) sqlData.get(4);
+
+            int numberOfFoods = 0;
+            for (Integer index : arrayListItemIds) {
                 numberOfFoods++;
-                arrayListItemIds.add(cursorRestart.getInt(cursorRestart.getColumnIndex("_id")));
-                cursorRestart.moveToNext();
             }
+
             foodIdsRestart = new int[numberOfFoods];
             Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
-            int i = 0;
+            int a = 0;
             for (Integer d : arrayItemIds) {
-                foodIdsRestart[i] = (int) d;
-                i++;
+                foodIdsRestart[a] = (int) d;
+                a++;
             }
-        } else {
-            ///////////////////////////////////////////
-            rvFavorite.setVisibility(View.GONE);
-            llNoFavorite.setVisibility(View.VISIBLE);
-            ///////////////////////////////////////////
-        }
 
-        cursorRestart = db.rawQuery("SELECT NAME FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[] {"1"});
-        if (cursorRestart.moveToFirst()) {
-            ArrayList<String> names = new ArrayList<String>();
-            while (!cursorRestart.isAfterLast()) {
-                names.add(cursorRestart.getString(cursorRestart.getColumnIndex("NAME")));
-                cursorRestart.moveToNext();
-            }
             foodNamesRestart = names.toArray(new String[names.size()]);
-        }
 
-        cursorRestart = db.rawQuery("SELECT COST FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
-        numberOfFoods = 0;
-        if (cursorRestart.moveToFirst()) {
-            ArrayList<Double> cost = new ArrayList<Double>();
-            while (!cursorRestart.isAfterLast()) {
-                numberOfFoods++;
-                cost.add(cursorRestart.getDouble(cursorRestart.getColumnIndex("COST")));
-                cursorRestart.moveToNext();
-            }
+
             foodCostsRestart = new double[numberOfFoods];
             Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
-            int i = 0;
+            int b = 0;
             for (Double d : cheeseBurgersCostsD) {
-                foodCostsRestart[i] = (double) d;
-                i++;
+                foodCostsRestart[b] = (double) d;
+                b++;
             }
-        }
 
-        cursorRestart = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
-        numberOfFoods = 0;
-        if (cursorRestart.moveToFirst()) {
-            ArrayList<Integer> imageId = new ArrayList<Integer>();
-            while (!cursorRestart.isAfterLast()) {
-                numberOfFoods++;
-                imageId.add(cursorRestart.getInt(cursorRestart.getColumnIndex("IMAGE_RESOURCE_ID")));
-                cursorRestart.moveToNext();
-            }
             foodImagesRestart = new int[numberOfFoods];
             Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
-            int i = 0;
+            int c = 0;
             for (Integer d : cheeseBurgersImagesD) {
-                foodImagesRestart[i] = (int) d;
-                i++;
+                foodImagesRestart[c] = (int) d;
+                c++;
+            }
+
+            foodTable = tableNameList.toArray(new String[tableNameList.size()]);
+
+            adapter = new CaptionedImagesAdapter(foodIdsRestart, foodNamesRestart, foodCostsRestart, foodImagesRestart);
+            rvFavorite.setAdapter(adapter);
+
+            manager = new GridLayoutManager(this, 2);
+            rvFavorite.setLayoutManager(manager);
+
+            adapter.setListener(new CaptionedImagesAdapter.Listener() {
+                @Override
+                public void onClick(int position) {
+                    Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable[position]);
+                    //intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, tableName);
+                    startActivity(intent);
+                }
+            });
+            ///////////////////////////////////////////
+            cursor = cursorRestart;
+            ///////////////////////////////////////////
+
+
+        } catch (SQLException e) {
+            Toast toast = Toast.makeText(this, "Database unavailable! FavoriteActivity", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public ArrayList sqlSelector(ArrayList<String> tablesList, RecyclerView rvFavorite, LinearLayout llNoFavorite) {
+
+        ArrayList<ArrayList<?>> sqlData = new ArrayList();
+
+        ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
+        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<Double> cost = new ArrayList<Double>();
+        ArrayList<Integer> imageId = new ArrayList<Integer>();
+        ArrayList<String> tableNameList = new ArrayList<String>();
+
+
+        for (String tableName : tablesList) {
+            cursor = db.rawQuery("SELECT _id FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                rvFavorite.setVisibility(View.VISIBLE);
+                llNoFavorite.setVisibility(View.GONE);
+                while (!cursor.isAfterLast()) {
+                    arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
+                    cursor.moveToNext();
+                }
             }
         }
 
-        adapter = new CaptionedImagesAdapter(foodIdsRestart, foodNamesRestart, foodCostsRestart, foodImagesRestart);
-        rvFavorite.setAdapter(adapter);
-
-        manager = new GridLayoutManager(this, 2);
-        rvFavorite.setLayoutManager(manager);
-
-        adapter.setListener(new CaptionedImagesAdapter.Listener() {
-            @Override
-            public void onClick(int position) {
-                Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
-                intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, "CHEESEBURGERS");
-                startActivity(intent);
+        for (String tableName : tablesList) {
+            cursor = db.rawQuery("SELECT NAME FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    names.add(cursor.getString(cursor.getColumnIndex("NAME")));
+                    cursor.moveToNext();
+                }
             }
-        });
-        ///////////////////////////////////////////
-        cursor = cursorRestart;
-        ///////////////////////////////////////////
+        }
+
+        for (String tableName : tablesList) {
+            cursor = db.rawQuery("SELECT COST FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    cost.add(cursor.getDouble(cursor.getColumnIndex("COST")));
+                    cursor.moveToNext();
+                }
+            }
+        }
+        for (String tableName : tablesList) {
+            cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    imageId.add(cursor.getInt(cursor.getColumnIndex("IMAGE_RESOURCE_ID")));
+                    cursor.moveToNext();
+                }
+            }
+        }
+
+        for (String tableName : tablesList) {
+            cursor = db.rawQuery("SELECT FOOD_TABLE FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    tableNameList.add(cursor.getString(cursor.getColumnIndex("FOOD_TABLE")));
+                    cursor.moveToNext();
+                }
+            }
+        }
+
+        sqlData.add(arrayListItemIds);
+        sqlData.add(names);
+        sqlData.add(cost);
+        sqlData.add(imageId);
+        sqlData.add(tableNameList);
+        return sqlData;
+    }
+
+    public ArrayList sqlSelectorRestart(ArrayList<String> tablesList, RecyclerView rvFavorite, LinearLayout llNoFavorite) {
+
+        ArrayList sqlData = new ArrayList();
+
+        ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
+        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<Double> cost = new ArrayList<Double>();
+        ArrayList<Integer> imageId = new ArrayList<Integer>();
+        ArrayList<String> tableNameList = new ArrayList<String>();
+
+        for (String tableName : tablesList) {
+            cursorRestart = db.rawQuery("SELECT _id FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursorRestart.moveToFirst()) {
+                ///////////////////////////////////////////
+                rvFavorite.setVisibility(View.VISIBLE);
+                llNoFavorite.setVisibility(View.GONE);
+                ///////////////////////////////////////////
+                while (!cursorRestart.isAfterLast()) {
+                    arrayListItemIds.add(cursorRestart.getInt(cursorRestart.getColumnIndex("_id")));
+                    cursorRestart.moveToNext();
+                }
+            } else {
+                ///////////////////////////////////////////
+                rvFavorite.setVisibility(View.GONE);
+                llNoFavorite.setVisibility(View.VISIBLE);
+                ///////////////////////////////////////////
+            }
+
+            cursorRestart = db.rawQuery("SELECT NAME FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursorRestart.moveToFirst()) {
+                while (!cursorRestart.isAfterLast()) {
+                    names.add(cursorRestart.getString(cursorRestart.getColumnIndex("NAME")));
+                    cursorRestart.moveToNext();
+                }
+            }
+
+            cursorRestart = db.rawQuery("SELECT COST FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursorRestart.moveToFirst()) {
+                while (!cursorRestart.isAfterLast()) {
+                    cost.add(cursorRestart.getDouble(cursorRestart.getColumnIndex("COST")));
+                    cursorRestart.moveToNext();
+                }
+            }
+
+            cursorRestart = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursorRestart.moveToFirst()) {
+                while (!cursorRestart.isAfterLast()) {
+                    imageId.add(cursorRestart.getInt(cursorRestart.getColumnIndex("IMAGE_RESOURCE_ID")));
+                    cursorRestart.moveToNext();
+                }
+            }
+
+            cursor = db.rawQuery("SELECT FOOD_TABLE FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    tableNameList.add(cursor.getString(cursor.getColumnIndex("FOOD_TABLE")));
+                    cursor.moveToNext();
+                }
+            }
+        }
+        sqlData.add(arrayListItemIds);
+        sqlData.add(names);
+        sqlData.add(cost);
+        sqlData.add(imageId);
+        sqlData.add(tableNameList);
+        return sqlData;
     }
 
     @Override
