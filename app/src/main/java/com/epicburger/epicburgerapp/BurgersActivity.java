@@ -57,7 +57,8 @@ public class BurgersActivity extends AppCompatActivity {
                 case 0:
                     return new FoodFragment("CHEESEBURGERS");
                 case 1:
-                    return new ChickenBurgersFragment();
+                    return new FoodFragment("CHICKENBURGERS");
+                    //return new ChickenBurgersFragment();
             }
             return null;
         }

@@ -158,6 +158,7 @@ public class FavoriteActivity extends AppCompatActivity {
        llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
 
         cursorRestart = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+        numberOfFoods = 0;
         if (cursorRestart.moveToFirst()) {
             ///////////////////////////////////////////
             rvFavorite.setVisibility(View.VISIBLE);
@@ -165,9 +166,11 @@ public class FavoriteActivity extends AppCompatActivity {
             ///////////////////////////////////////////
             ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
             while (!cursorRestart.isAfterLast()) {
+                numberOfFoods++;
                 arrayListItemIds.add(cursorRestart.getInt(cursorRestart.getColumnIndex("_id")));
                 cursorRestart.moveToNext();
             }
+            foodIdsRestart = new int[numberOfFoods];
             Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
             int i = 0;
             for (Integer d : arrayItemIds) {
@@ -192,12 +195,15 @@ public class FavoriteActivity extends AppCompatActivity {
         }
 
         cursorRestart = db.rawQuery("SELECT COST FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+        numberOfFoods = 0;
         if (cursorRestart.moveToFirst()) {
             ArrayList<Double> cost = new ArrayList<Double>();
             while (!cursorRestart.isAfterLast()) {
+                numberOfFoods++;
                 cost.add(cursorRestart.getDouble(cursorRestart.getColumnIndex("COST")));
                 cursorRestart.moveToNext();
             }
+            foodCostsRestart = new double[numberOfFoods];
             Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
             int i = 0;
             for (Double d : cheeseBurgersCostsD) {
@@ -207,12 +213,15 @@ public class FavoriteActivity extends AppCompatActivity {
         }
 
         cursorRestart = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+        numberOfFoods = 0;
         if (cursorRestart.moveToFirst()) {
             ArrayList<Integer> imageId = new ArrayList<Integer>();
             while (!cursorRestart.isAfterLast()) {
+                numberOfFoods++;
                 imageId.add(cursorRestart.getInt(cursorRestart.getColumnIndex("IMAGE_RESOURCE_ID")));
                 cursorRestart.moveToNext();
             }
+            foodImagesRestart = new int[numberOfFoods];
             Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
             int i = 0;
             for (Integer d : cheeseBurgersImagesD) {
