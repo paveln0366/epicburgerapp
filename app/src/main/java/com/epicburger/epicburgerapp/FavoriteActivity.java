@@ -60,6 +60,8 @@ public class FavoriteActivity extends AppCompatActivity {
         rvFavorite = (RecyclerView) findViewById(R.id.rv_favorite);
         llNoFavorite = (LinearLayout) findViewById(R.id.ll_no_favorite);
 
+        rvFavorite.setVisibility(View.GONE);
+        llNoFavorite.setVisibility(View.VISIBLE);
 
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(this);
         try {
@@ -71,11 +73,21 @@ public class FavoriteActivity extends AppCompatActivity {
 
             ArrayList<ArrayList<?>> sqlData = sqlSelector(tablesList, rvFavorite, llNoFavorite);
 
+
+
             ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
             ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
             ArrayList<Double> cost = (ArrayList<Double>) sqlData.get(2);
             ArrayList<Integer> imageId = (ArrayList<Integer>) sqlData.get(3);
             ArrayList<String> tableNameList = (ArrayList<String>) sqlData.get(4);
+
+            if (arrayListItemIds.isEmpty()) {
+                rvFavorite.setVisibility(View.GONE);
+                llNoFavorite.setVisibility(View.VISIBLE);
+            } else {
+                rvFavorite.setVisibility(View.VISIBLE);
+                llNoFavorite.setVisibility(View.GONE);
+            }
 
             int numberOfFoods = 0;
             for (Integer index : arrayListItemIds) {
@@ -142,11 +154,21 @@ public class FavoriteActivity extends AppCompatActivity {
 
             ArrayList<ArrayList<?>> sqlData = sqlSelectorRestart(tablesList, rvFavorite, llNoFavorite);
 
+
+
             ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
             ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
             ArrayList<Double> cost = (ArrayList<Double>) sqlData.get(2);
             ArrayList<Integer> imageId = (ArrayList<Integer>) sqlData.get(3);
             ArrayList<String> tableNameList = (ArrayList<String>) sqlData.get(4);
+
+            if (arrayListItemIds.isEmpty()) {
+                rvFavorite.setVisibility(View.GONE);
+                llNoFavorite.setVisibility(View.VISIBLE);
+            } else {
+                rvFavorite.setVisibility(View.VISIBLE);
+                llNoFavorite.setVisibility(View.GONE);
+            }
 
             int numberOfFoods = 0;
             for (Integer index : arrayListItemIds) {
@@ -223,8 +245,6 @@ public class FavoriteActivity extends AppCompatActivity {
         for (String tableName : tablesList) {
             cursor = db.rawQuery("SELECT _id FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
             if (cursor.moveToFirst()) {
-                rvFavorite.setVisibility(View.VISIBLE);
-                llNoFavorite.setVisibility(View.GONE);
                 while (!cursor.isAfterLast()) {
                     arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
                     cursor.moveToNext();
@@ -292,19 +312,10 @@ public class FavoriteActivity extends AppCompatActivity {
         for (String tableName : tablesList) {
             cursorRestart = db.rawQuery("SELECT _id FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
             if (cursorRestart.moveToFirst()) {
-                ///////////////////////////////////////////
-                rvFavorite.setVisibility(View.VISIBLE);
-                llNoFavorite.setVisibility(View.GONE);
-                ///////////////////////////////////////////
                 while (!cursorRestart.isAfterLast()) {
                     arrayListItemIds.add(cursorRestart.getInt(cursorRestart.getColumnIndex("_id")));
                     cursorRestart.moveToNext();
                 }
-            } else {
-                ///////////////////////////////////////////
-                rvFavorite.setVisibility(View.GONE);
-                llNoFavorite.setVisibility(View.VISIBLE);
-                ///////////////////////////////////////////
             }
 
             cursorRestart = db.rawQuery("SELECT NAME FROM " + tableName + " WHERE FAVORITE = ?", new String[]{"1"});
