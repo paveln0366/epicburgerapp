@@ -24,16 +24,17 @@ public class FavoriteActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
     private Cursor cursorRestart;
+    private int numberOfFoods;
 
-    int[] itemIds = new int[4];
-    String[] cheeseBurgersNames = new String[4];
-    double[] cheeseBurgersCosts = new double[4];
-    int[] cheeseBurgersImages = new int[4];
+    int[] foodIds = new int[0];
+    String[] foodNames = new String[0];
+    double[] foodCosts = new double[0];
+    int[] foodImages = new int[0];
 
-    int[] itemIdsRestart = new int[4];
-    String[] cheeseBurgersNamesRestart = new String[4];
-    double[] cheeseBurgersCostsRestart = new double[4];
-    int[] cheeseBurgersImagesRestart = new int[4];
+    int[] foodIdsRestart = new int[0];
+    String[] foodNamesRestart = new String[0];
+    double[] foodCostsRestart = new double[0];
+    int[] foodImagesRestart = new int[0];
 
     CaptionedImagesAdapter adapter;
     GridLayoutManager manager;
@@ -63,18 +64,21 @@ public class FavoriteActivity extends AppCompatActivity {
             db = epicBurgerDatabaseHelper.getReadableDatabase();
 
             cursor = db.rawQuery("SELECT _id FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+            numberOfFoods = 0;
             if (cursor.moveToFirst()) {
                 rvFavorite.setVisibility(View.VISIBLE);
                 llNoFavorite.setVisibility(View.GONE);
                 ArrayList<Integer> arrayListItemIds = new ArrayList<Integer>();
                 while (!cursor.isAfterLast()) {
+                    numberOfFoods++;
                     arrayListItemIds.add(cursor.getInt(cursor.getColumnIndex("_id")));
                     cursor.moveToNext();
                 }
+                foodIds = new int[numberOfFoods];
                 Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
                 int i = 0;
                 for (Integer d : arrayItemIds) {
-                    itemIds[i] = (int) d;
+                    foodIds[i] = (int) d;
                     i++;
                 }
             }
@@ -86,40 +90,46 @@ public class FavoriteActivity extends AppCompatActivity {
                     names.add(cursor.getString(cursor.getColumnIndex("NAME")));
                     cursor.moveToNext();
                 }
-                cheeseBurgersNames = names.toArray(new String[names.size()]);
+                foodNames = names.toArray(new String[names.size()]);
             }
 
             cursor = db.rawQuery("SELECT COST FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+            numberOfFoods = 0;
             if (cursor.moveToFirst()) {
                 ArrayList<Double> cost = new ArrayList<Double>();
                 while (!cursor.isAfterLast()) {
+                    numberOfFoods++;
                     cost.add(cursor.getDouble(cursor.getColumnIndex("COST")));
                     cursor.moveToNext();
                 }
+                foodCosts = new double[numberOfFoods];
                 Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
                 int i = 0;
                 for (Double d : cheeseBurgersCostsD) {
-                    cheeseBurgersCosts[i] = (double) d;
+                    foodCosts[i] = (double) d;
                     i++;
                 }
             }
 
             cursor = db.rawQuery("SELECT IMAGE_RESOURCE_ID FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
+            numberOfFoods = 0;
             if (cursor.moveToFirst()) {
                 ArrayList<Integer> imageId = new ArrayList<Integer>();
                 while (!cursor.isAfterLast()) {
+                    numberOfFoods++;
                     imageId.add(cursor.getInt(cursor.getColumnIndex("IMAGE_RESOURCE_ID")));
                     cursor.moveToNext();
                 }
+                foodImages = new int[numberOfFoods];
                 Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
                 int i = 0;
                 for (Integer d : cheeseBurgersImagesD) {
-                    cheeseBurgersImages[i] = (int) d;
+                    foodImages[i] = (int) d;
                     i++;
                 }
             }
 
-            adapter = new CaptionedImagesAdapter(itemIds, cheeseBurgersNames, cheeseBurgersCosts, cheeseBurgersImages);
+            adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages);
             rvFavorite.setAdapter(adapter);
 
             manager = new GridLayoutManager(this, 2);
@@ -129,7 +139,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 @Override
                 public void onClick(int position) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, itemIds[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
                     intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, "CHEESEBURGERS");
                     startActivity(intent);
                 }
@@ -161,7 +171,7 @@ public class FavoriteActivity extends AppCompatActivity {
             Integer[] arrayItemIds = arrayListItemIds.toArray(new Integer[arrayListItemIds.size()]);
             int i = 0;
             for (Integer d : arrayItemIds) {
-                itemIdsRestart[i] = (int) d;
+                foodIdsRestart[i] = (int) d;
                 i++;
             }
         } else {
@@ -178,7 +188,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 names.add(cursorRestart.getString(cursorRestart.getColumnIndex("NAME")));
                 cursorRestart.moveToNext();
             }
-            cheeseBurgersNamesRestart = names.toArray(new String[names.size()]);
+            foodNamesRestart = names.toArray(new String[names.size()]);
         }
 
         cursorRestart = db.rawQuery("SELECT COST FROM CHEESEBURGERS WHERE FAVORITE = ?", new String[]{"1"});
@@ -191,7 +201,7 @@ public class FavoriteActivity extends AppCompatActivity {
             Double[] cheeseBurgersCostsD = cost.toArray(new Double[cost.size()]);
             int i = 0;
             for (Double d : cheeseBurgersCostsD) {
-                cheeseBurgersCostsRestart[i] = (double) d;
+                foodCostsRestart[i] = (double) d;
                 i++;
             }
         }
@@ -206,12 +216,12 @@ public class FavoriteActivity extends AppCompatActivity {
             Integer[] cheeseBurgersImagesD = imageId.toArray(new Integer[imageId.size()]);
             int i = 0;
             for (Integer d : cheeseBurgersImagesD) {
-                cheeseBurgersImagesRestart[i] = (int) d;
+                foodImagesRestart[i] = (int) d;
                 i++;
             }
         }
 
-        adapter = new CaptionedImagesAdapter(itemIdsRestart, cheeseBurgersNamesRestart, cheeseBurgersCostsRestart, cheeseBurgersImagesRestart);
+        adapter = new CaptionedImagesAdapter(foodIdsRestart, foodNamesRestart, foodCostsRestart, foodImagesRestart);
         rvFavorite.setAdapter(adapter);
 
         manager = new GridLayoutManager(this, 2);
@@ -221,7 +231,7 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_FOOD_ID, itemIds[position]);
+                intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
                 intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, "CHEESEBURGERS");
                 startActivity(intent);
             }
