@@ -1,6 +1,5 @@
 package com.epicburger.epicburgerapp;
 
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,12 @@ public class CaptionedImagesAdapter
     private String[] captions;
     private double[] costs;
     private int[] imageIds;
+    private String[] tablesNames;
 
     private Listener listener;
 
     public interface Listener {
-        void onClick(int position);
+        void onClick(int position, String tablesName);
     }
 
     // ViewHolder in RecyclerView
@@ -41,6 +41,14 @@ public class CaptionedImagesAdapter
         this.costs = costs;
         this.imageIds = imageIds;
         this.itemIds = itemIds;
+    }
+
+    public CaptionedImagesAdapter(int[] itemIds, String[] captions, double[] costs, int[] imageIds, String[] tablesNames) {
+        this.captions = captions;
+        this.costs = costs;
+        this.imageIds = imageIds;
+        this.itemIds = itemIds;
+        this.tablesNames = tablesNames;
     }
 
 
@@ -64,7 +72,8 @@ public class CaptionedImagesAdapter
     // Connect data with ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if (captions[position] != null) {
+//        captions[position] != null
+        if (itemIds[position] > 0) {
             CardView cardView = holder.cardView;
             ImageView imageView = (ImageView) cardView.findViewById(R.id.info_image);
             TextView textView_cost = (TextView) cardView.findViewById(R.id.info_cost);
@@ -82,8 +91,10 @@ public class CaptionedImagesAdapter
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int positionX = itemIds[position];
                     if (listener != null) {
-                        listener.onClick(position);
+                        listener.onClick(itemIds[position], tablesNames[position]);
+//                        listener.onClick(itemIds[position]);
                     }
                 }
             });

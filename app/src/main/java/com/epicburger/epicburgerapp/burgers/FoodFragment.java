@@ -42,6 +42,7 @@ public class FoodFragment extends Fragment {
         String[] foodNames = new String[0];
         double[] foodCosts = new double[0];
         int[] foodImages = new int[0];
+        String[] foodTableNames = new String[0];
 
         SQLiteOpenHelper epicBurgerDatabaseHelper = new EpicBurgerDatabaseHelper(getActivity());
         try {
@@ -110,6 +111,16 @@ public class FoodFragment extends Fragment {
                     i++;
                 }
             }
+
+            cursor = db.rawQuery("SELECT FOOD_TABLE FROM " + foodTable, null);
+            if (cursor.moveToFirst()) {
+                ArrayList<String> foodTableList = new ArrayList<String>();
+                while (!cursor.isAfterLast()) {
+                    foodTableList.add(cursor.getString(cursor.getColumnIndex("FOOD_TABLE")));
+                    cursor.moveToNext();
+                }
+                foodTableNames = foodTableList.toArray(new String[foodTableList.size()]);
+            }
 //                String nameText = cursor.getString(0);
 //                String description = cursor.getString(1);
 //                int photoId = cursor.getInt(2);
@@ -127,7 +138,7 @@ public class FoodFragment extends Fragment {
 //                detailImage.setContentDescription(nameText);
 
 
-            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages);
+            CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages, foodTableNames);
             foodRecycler.setAdapter(adapter);
 
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -135,10 +146,10 @@ public class FoodFragment extends Fragment {
 
             adapter.setListener(new CaptionedImagesAdapter.Listener() {
                 @Override
-                public void onClick(int position) {
+                public void onClick(int position, String tablesName) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
                     //Fix bug: ++position
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, ++position);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, position);
                     intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable);
                     getActivity().startActivity(intent);
                 }

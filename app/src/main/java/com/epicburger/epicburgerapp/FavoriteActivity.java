@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-// TODO: Update this activity for different tables
+// TODO:
 
 public class FavoriteActivity extends AppCompatActivity {
     private SQLiteDatabase db;
@@ -71,9 +71,7 @@ public class FavoriteActivity extends AppCompatActivity {
             tablesList.add("CHEESEBURGERS");
             tablesList.add("CHICKENBURGERS");
 
-            ArrayList<ArrayList<?>> sqlData = sqlSelector(tablesList, rvFavorite, llNoFavorite);
-
-
+            ArrayList<ArrayList<?>> sqlData = sqlSelector(tablesList);
 
             ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
             ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
@@ -122,7 +120,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
             foodTable = tableNameList.toArray(new String[tableNameList.size()]);
 
-            adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages);
+            adapter = new CaptionedImagesAdapter(foodIds, foodNames, foodCosts, foodImages, foodTable);
             rvFavorite.setAdapter(adapter);
 
             manager = new GridLayoutManager(this, 2);
@@ -130,14 +128,15 @@ public class FavoriteActivity extends AppCompatActivity {
 
             adapter.setListener(new CaptionedImagesAdapter.Listener() {
                 @Override
-                public void onClick(int position) {
+                public void onClick(int position, String tablesName) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable[position]);
+//                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position-1]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, position);
+//                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, tablesName);
                     startActivity(intent);
                 }
             });
-
         } catch (SQLException e) {
             Toast toast = Toast.makeText(this, "Database unavailable! FavoriteActivity", Toast.LENGTH_SHORT);
             toast.show();
@@ -152,9 +151,7 @@ public class FavoriteActivity extends AppCompatActivity {
             tablesList.add("CHEESEBURGERS");
             tablesList.add("CHICKENBURGERS");
 
-            ArrayList<ArrayList<?>> sqlData = sqlSelectorRestart(tablesList, rvFavorite, llNoFavorite);
-
-
+            ArrayList<ArrayList<?>> sqlData = sqlSelectorRestart(tablesList);
 
             ArrayList<Integer> arrayListItemIds = (ArrayList<Integer>) sqlData.get(0);
             ArrayList<String> names = (ArrayList<String>) sqlData.get(1);
@@ -204,7 +201,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
             foodTableRestart = tableNameList.toArray(new String[tableNameList.size()]);
 
-            adapter = new CaptionedImagesAdapter(foodIdsRestart, foodNamesRestart, foodCostsRestart, foodImagesRestart);
+            adapter = new CaptionedImagesAdapter(foodIdsRestart, foodNamesRestart, foodCostsRestart, foodImagesRestart, foodTableRestart);
             rvFavorite.setAdapter(adapter);
 
             manager = new GridLayoutManager(this, 2);
@@ -212,18 +209,16 @@ public class FavoriteActivity extends AppCompatActivity {
 
             adapter.setListener(new CaptionedImagesAdapter.Listener() {
                 @Override
-                public void onClick(int position) {
+                public void onClick(int position, String tablesName) {
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position]);
-                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTableRestart[position]);
+//                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, foodIds[position-1]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_ID, position);
+//                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, foodTable[position]);
+                    intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, tablesName);
                     //intent.putExtra(DetailActivity.EXTRA_FOOD_TABLE, tableName);
                     startActivity(intent);
                 }
             });
-            ///////////////////////////////////////////
-            cursor = cursorRestart;
-            ///////////////////////////////////////////
-
 
         } catch (SQLException e) {
             Toast toast = Toast.makeText(this, "Database unavailable! FavoriteActivity", Toast.LENGTH_SHORT);
@@ -231,7 +226,7 @@ public class FavoriteActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList sqlSelector(ArrayList<String> tablesList, RecyclerView rvFavorite, LinearLayout llNoFavorite) {
+    public ArrayList sqlSelector(ArrayList<String> tablesList) {
 
         ArrayList<ArrayList<?>> sqlData = new ArrayList<ArrayList<?>>();
 
@@ -299,7 +294,7 @@ public class FavoriteActivity extends AppCompatActivity {
         return sqlData;
     }
 
-    public ArrayList sqlSelectorRestart(ArrayList<String> tablesList, RecyclerView rvFavorite, LinearLayout llNoFavorite) {
+    public ArrayList sqlSelectorRestart(ArrayList<String> tablesList) {
 
         ArrayList<ArrayList<?>> sqlData = new ArrayList<ArrayList<?>>();
 
@@ -350,6 +345,11 @@ public class FavoriteActivity extends AppCompatActivity {
                 }
             }
         }
+
+        ///////////////////////////////////////////
+        cursor = cursorRestart;
+        ///////////////////////////////////////////
+
         sqlData.add(arrayListItemIds);
         sqlData.add(names);
         sqlData.add(cost);
