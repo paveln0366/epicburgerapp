@@ -12,11 +12,15 @@
         android:src="@drawable/epicburger_logo"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="bottom|start"
-        android:layout_margin="@dimen/standard_margin">
+        android:layout_gravity="bottom"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="16dp"
+        android:background="#50000000">
 
         <TextView
             android:layout_width="wrap_content"
