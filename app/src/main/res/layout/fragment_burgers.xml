@@ -20,7 +20,8 @@ tools:context=".BurgersFragment">
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextAppearance="@style/TabAppearance"/>
+        app:tabTextAppearance="@style/TabAppearance"
+        app:tabIndicatorColor="@color/color"/>
 </com.google.android.material.appbar.AppBarLayout>
 
 <androidx.viewpager.widget.ViewPager
