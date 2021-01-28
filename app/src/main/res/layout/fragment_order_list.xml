@@ -5,16 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".OrderActivity">
+    tools:context=".OrderListFragment">
 
-    <include
-        layout="@layout/toolbar_main"
-        android:id="@+id/toolbar"/>
-
-    <LinearLayout
-        android:id="@+id/order_list_container"
+    <ListView
+        android:id="@+id/order_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>
