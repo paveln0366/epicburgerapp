@@ -1,10 +1,5 @@
 package com.epicburger.epicburgerapp;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,31 +7,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
-public class OrderActivity extends AppCompatActivity implements OrderListFragment.Listener{
+import android.os.Bundle;
+
+public class OrderDetailActivity extends AppCompatActivity {
+
+    public static final String EXTRA_ORDER_ID = "orderId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_order_detail);
 
-        // Make toolbar support action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Add up button in toolbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ListFragment fragment = new OrderListFragment();
+        OrderDetailFragment fragment = new OrderDetailFragment();
+        int orderId = (int) getIntent().getExtras().get(EXTRA_ORDER_ID);
+        fragment.setOrderId(orderId);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.order_list_container, fragment);
+        ft.add(R.id.order_detail_container, fragment);
         ft.commit();
-    }
-
-    @Override
-    public void orderClicked(long id) {
-        Intent intent = new Intent(this, OrderDetailActivity.class);
-        intent.putExtra(OrderDetailActivity.EXTRA_ORDER_ID, (int)id);
-        startActivity(intent);
     }
 }

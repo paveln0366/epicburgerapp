@@ -8,7 +8,7 @@
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/menu_order"
-        android:title="@string/nav_order"
+        android:title="@string/nav_orders"
         android:icon="@drawable/ic_order"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"/>

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">EpicBurger</string>
+    <!--Activity titles-->
     <string name="burgers">Burgers</string>
     <string name="rolls">Rolls</string>
     <string name="desserts">Desserts</string>
@@ -7,6 +8,8 @@
     <string name="help">Help</string>
     <string name="feedback">Feedback</string>
     <string name="email">www.epicburger.com</string>
+    <string name="orders">Orders</string>
+    <string name="order_detail">Order detail</string>
 
     <string name="nav_new">New</string>
     <string name="nav_burgers">Burgers</string>
@@ -14,7 +17,7 @@
     <string name="nav_drinks">Drinks</string>
     <string name="nav_rolls">Rolls</string>
     <string name="nav_user_name">User name</string>
-    <string name="nav_order">Order</string>
+    <string name="nav_orders">Orders</string>
     <string name="nav_favorite">Favorite</string>
     <string name="nav_support">Support</string>
     <string name="nav_help">Help</string>
