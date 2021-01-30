@@ -9,11 +9,9 @@
     <include
         layout="@layout/toolbar_main"
         android:id="@+id/toolbar"/>
-
-    <LinearLayout
-        android:id="@+id/order_detail_container"
+    <fragment
+        android:id="@+id/order_detail_fragment"
+        android:name="com.epicburger.epicburgerapp.orders.OrderDetailFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>

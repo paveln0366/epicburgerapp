@@ -6,17 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".orders.OrdersActivity">
-
     <include
         layout="@layout/toolbar_main"
         android:id="@+id/toolbar"/>
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/order_list_container"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical">-->
-<!--    </LinearLayout>-->
     <fragment
         android:id="@+id/order_list_fragment"
         android:name="com.epicburger.epicburgerapp.orders.OrderListFragment"

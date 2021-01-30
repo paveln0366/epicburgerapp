@@ -24,11 +24,9 @@ public class OrderDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        OrderDetailFragment fragment = new OrderDetailFragment();
+        OrderDetailFragment fragment = (OrderDetailFragment)
+                getSupportFragmentManager().findFragmentById(R.id.order_detail_fragment);
         int orderId = (int) getIntent().getExtras().get(EXTRA_ORDER_ID);
         fragment.setOrderId(orderId);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.order_detail_container, fragment);
-        ft.commit();
     }
 }
