@@ -24,10 +24,10 @@ public class OrdersActivity extends AppCompatActivity implements OrderListFragme
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ListFragment fragment = new OrderListFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.order_list_container, fragment);
-        ft.commit();
+//        ListFragment fragment = new OrderListFragment();
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.add(R.id.order_list_container, fragment);
+//        ft.commit();
     }
 
     @Override
