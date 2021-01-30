@@ -2,6 +2,8 @@ package com.epicburger.epicburgerapp.orders;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +16,14 @@ import com.epicburger.epicburgerapp.R;
 public class OrderDetailFragment extends Fragment {
 
     private long orderId;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            orderId = savedInstanceState.getLong("orderId");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +41,11 @@ public class OrderDetailFragment extends Fragment {
         tvOrderName.setText(order.getName());
         tvOrderCost.setText(String.valueOf(order.getCost()));
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle saveInstanceState) {
+        saveInstanceState.putLong("orderId", orderId);
     }
 
     public void setOrderId(long orderId) {
