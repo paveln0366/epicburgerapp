@@ -1,4 +1,4 @@
-package com.epicburger.epicburgerapp;
+package com.epicburger.epicburgerapp.orders;
 
 import androidx.annotation.NonNull;
 

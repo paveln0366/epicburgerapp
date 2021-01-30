@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".OrderDetailActivity"
+            android:name=".orders.OrderDetailActivity"
             android:label="@string/order_detail"
-            android:parentActivityName=".OrderActivity">
+            android:parentActivityName=".orders.OrdersActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -40,7 +40,7 @@
         </activity>
         <activity android:name=".CreateOrderActivity" />
         <activity
-            android:name=".OrderActivity"
+            android:name=".orders.OrdersActivity"
             android:label="@string/orders"
             android:parentActivityName=".MainActivity">
             <meta-data

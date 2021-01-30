@@ -1,13 +1,13 @@
-package com.epicburger.epicburgerapp;
+package com.epicburger.epicburgerapp.orders;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.ListFragment;
 
 import android.os.Bundle;
+
+import com.epicburger.epicburgerapp.R;
 
 public class OrderDetailActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.epicburger.epicburgerapp;
+package com.epicburger.epicburgerapp.orders;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.epicburger.epicburgerapp.R;
 
 public class OrderDetailFragment extends Fragment {
 

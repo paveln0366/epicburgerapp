@@ -1,10 +1,9 @@
-package com.epicburger.epicburgerapp;
+package com.epicburger.epicburgerapp.orders;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
@@ -36,8 +35,7 @@ public class OrderListFragment extends ListFragment {
 
         setListAdapter(adapter);
 
-//        return inflater.inflate(R.layout.fragment_order_list,
-//                container, false);
+//        return inflater.inflate(R.layout.fragment_order_list, container, false);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

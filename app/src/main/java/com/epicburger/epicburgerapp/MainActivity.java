@@ -9,10 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -21,6 +18,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.epicburger.epicburgerapp.orders.OrdersActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new RollsFragment();
                 break;
             case R.id.nav_order:
-                intent = new Intent(this, OrderActivity.class);
+                intent = new Intent(this, OrdersActivity.class);
                 break;
             case R.id.nav_help:
                 intent = new Intent(this, HelpActivity.class);
@@ -149,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_order:
-                Intent intent = new Intent(this, OrderActivity.class);
+                Intent intent = new Intent(this, OrdersActivity.class);
                 startActivity(intent);
                 return true;
             default:

@@ -1,29 +1,26 @@
-package com.epicburger.epicburgerapp;
+package com.epicburger.epicburgerapp.orders;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
-public class OrderActivity extends AppCompatActivity implements OrderListFragment.Listener{
+import com.epicburger.epicburgerapp.R;
+
+public class OrdersActivity extends AppCompatActivity implements OrderListFragment.Listener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_orders);
 
-        // Make toolbar support action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Add up button in toolbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
