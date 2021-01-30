@@ -2,6 +2,7 @@ package com.epicburger.epicburgerapp.orders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +28,19 @@ public class OrdersActivity extends AppCompatActivity implements OrderListFragme
 
     @Override
     public void orderClicked(long id) {
-        Intent intent = new Intent(this, OrderDetailActivity.class);
-        intent.putExtra(OrderDetailActivity.EXTRA_ORDER_ID, (int)id);
-        startActivity(intent);
+        View orderDetailContainer = findViewById(R.id.order_detail_container);
+        if (orderDetailContainer != null) {
+            OrderDetailFragment orderDetailFragment = new OrderDetailFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            orderDetailFragment.setOrderId(id);
+            ft.replace(R.id.order_detail_container, orderDetailFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();
+        } else {
+            Intent intent = new Intent(this, OrderDetailActivity.class);
+            intent.putExtra(OrderDetailActivity.EXTRA_ORDER_ID, (int)id);
+            startActivity(intent);
+        }
     }
 }

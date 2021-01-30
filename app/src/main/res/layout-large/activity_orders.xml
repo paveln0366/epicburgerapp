@@ -19,9 +19,8 @@
             android:layout_weight="2"
             android:layout_height="match_parent"/>
 
-        <fragment
-            android:id="@+id/order_detail_fragment"
-            android:name="com.epicburger.epicburgerapp.orders.OrderDetailFragment"
+        <FrameLayout
+            android:id="@+id/order_detail_container"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"/>
