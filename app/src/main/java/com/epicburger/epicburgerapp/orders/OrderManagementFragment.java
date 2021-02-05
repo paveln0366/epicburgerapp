@@ -1,5 +1,6 @@
 package com.epicburger.epicburgerapp.orders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -87,6 +88,11 @@ public class OrderManagementFragment extends Fragment implements View.OnClickLis
 
     private void onClickStart() {
         running = true;
+
+        Intent intent = new Intent(getActivity(), OrderIsDoneService.class);
+        intent.putExtra(OrderIsDoneService.EXTRA_MESSAGE,
+                getResources().getString(R.string.order_is_done));
+        getActivity().startService(intent);
     }
 
     private void onClickStop() {
